@@ -1,0 +1,113 @@
+
+
+	private static void lib_mio_tests()
+	{
+		int i = 5;
+
+		do_cast( i );
+
+		int retc = total( argv( 0, 1, 2, 3, 4 ) );
+
+		require( retc == 1 || retc == -2 );
+
+		Object[] retv = retv( retc );
+
+		inspect( "retv", retv );
+
+		if( retc == 1 )
+		{
+			int total = (Integer) retv[ 0 ];
+
+			cout.println( "Total: %d", total );
+
+			assert_equal( 10, total );
+		}
+		else if( retc == -2 )
+		{
+			String message = (String) retv[ 0 ];
+
+			Throwable error = (Throwable) retv[ 1 ];
+
+			cerr.println( message );
+
+			cdebug.println( retrace( error ) );
+		}
+	}
+
+	/**
+	min: 5: int v1, int v2, int v3, int v4, int v5
+	mout 1: int total
+	merr 2: String description, Throwable error
+	*/
+	@MethodInfo
+	(
+		min = { Integer.class, Integer.class, Integer.class, Integer.class, Integer.class },
+		mout = { Integer.class },
+		merr = { String.class, Throwable.class }
+	)
+	private static int total( int argc )
+	{
+		try
+		{
+			require( argc == 5 );
+
+			Object[] args = min.pop();
+
+			inspect( "min", args );
+
+			int total = 0;
+
+			for( int i=0; i<argc; i++ )
+			{
+				int value = (Integer) args[ i ];
+
+				//cout.println( "args[ %d ] = %d", i, value );
+
+				assert_equal( i, value );
+
+				total += value;
+			}
+
+			return mout.push( total );
+		}
+		catch( Throwable error )
+		{
+			return merr.push( "Error calculating total", error );
+		}
+	}
+
+
+	private static void inspect( String id, Object[] args )
+	{
+		cout.println( id + ": " + args.length  );
+
+		for( int i=0; i<args.length; i++ )
+		{
+			cout.println( "  args[ %d ] = (%s) %s", i, args[ i ].getClass(), args[ i ] );
+		}
+	}
+
+
+	private static void do_cast( Object o )
+	{
+		Class type = o.getClass();
+
+		cout.println( "type: %s", type );
+
+		int j = (Integer) get_as( type, o );
+
+		cout.println( "j: %d", j );
+	}
+
+	private static <T> T get_as( Class<T> type, Object o )
+	{
+		return type.cast( o );
+	}
+
+
+	private static int m2( int argc )
+	{
+		require( argc == 5 );
+
+		return 0;
+	}

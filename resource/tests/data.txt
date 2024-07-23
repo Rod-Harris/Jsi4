@@ -1,0 +1,6 @@
+<jsi4.tests>
+
+[DataObject]
+{b, s, i, l, f, d, c, bl, st}
+1, 2, 3, 4, 1.1, 2.2, C, true, Hello
+5, 6, 7, 8, 9.9, 10.1, A, false, Goodbye

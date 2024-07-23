@@ -1,0 +1,14 @@
+jp5pkg=jsi4
+JP5Cls=Jsi4
+JP5ENV=JSI4
+TARGET_DIR_PARENT="$HOME/tmp/devel/target/jp5-apps/$JP5Cls"
+JP5_APP_MAIN="rojira.$jp5pkg.Main"
+build_timestamp=-
+build=400
+version=JP5Wrapper
+INSTALL_LIB_DIR="$HOME/devel/lib"
+DEPS_DIR="$HOME/devel/lib"
+JAR_DEPS=
+NATIVE_DEPS=
+MODULES=
+FX_OPTS=
